@@ -1,0 +1,40 @@
+{
+    "class": "AS3",
+    "declaration": {
+        "class": "ADC",
+        "schemaVersion": "3.7.0",
+        "id": "bigiq_app_test",
+        "label": "Test",
+        "remark": "HTTP app",
+        "target": {
+            "hostname": "<hostname-of-bigip>"
+        },
+        "BigIQ_App_Tenant": {
+            "class": "Tenant",
+            "BigIQApp": {
+                "class": "Application",
+                "template": "http",
+                "serviceMain": {
+                    "class": "Service_HTTP",
+                    "virtualAddresses": [
+                        "10.1.20.39"
+                    ],
+                    "pool": "pool_with_vip"
+                },
+                
+                "pool_with_vip": {
+                    "class": "Pool",
+                    "monitors": [
+                        "http"
+                    ],
+                    "members": [{
+                    "servicePort": 80,
+                    "serverAddresses": [
+                        "10.1.20.9"
+                    ]
+                    }]
+                }
+            }
+        }
+    }
+}
